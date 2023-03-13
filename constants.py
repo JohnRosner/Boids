@@ -9,3 +9,5 @@ boid_color = (0, 0, 150)
 boid_size = 15
 
 boid_speed = 5
+
+num_boids = 50

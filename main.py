@@ -1,11 +1,19 @@
+import math
+
 import pygame
 
 from constants import *
 from boid import *
+import random
 
 pygame.init()
 window = pygame.display.set_mode((window_width, window_height))
-boids = [Boid(500, 500, 0)]
+boids = []
+
+
+def init():
+    for i in range(num_boids):
+        boids.append(Boid(random.randint(50, window_width - 100), random.randint(50, window_height - 100), random.random() * 2 * math.pi))
 
 
 def draw():
@@ -17,12 +25,15 @@ def draw():
 
 
 def loop():
-    boids[0].theta += 0.05
-    boids[0].move()
+    # boids[0].theta += 0.05
+    for boid in boids:
+        boid.move()
+        pass
     draw()
 
 
 def main():
+    init()
     run = True
     while run:
         pygame.time.delay(16)
