@@ -13,7 +13,7 @@ boids = []
 
 def init():
     for i in range(num_boids):
-        boids.append(Boid(random.randint(50, window_width - 100), random.randint(50, window_height - 100), random.random() * 2 * math.pi))
+        boids.append(Boid(random.randint(50, window_width - 100), random.randint(50, window_height - 100), random.uniform(0, 2 * math.pi)))
 
 
 def draw():
@@ -22,25 +22,30 @@ def draw():
     for boid in boids:
         points = boid.get_points()
         pygame.draw.polygon(window, boid_color, points)
+        # pygame.draw.circle(window, (150, 0, 0), points[0], close_distance, 1)
 
 
 def loop():
-    # boids[0].theta += 0.05
     for boid in boids:
-        boid.move()
-        pass
+        boid.move(boids)
     draw()
 
 
 def main():
     init()
     run = True
+    pause = False
     while run:
         pygame.time.delay(16)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-        loop()
+            if event.type == pygame.KEYDOWN:
+                keys = pygame.key.get_pressed()
+                if keys[pause_key]:
+                    pause = not pause
+        if not pause:
+            loop()
         pygame.display.update()
     pygame.quit()
 
